@@ -52,7 +52,10 @@ Tailwind's semantic utilities (`bg-primary`, `rounded-md`, ...).
 - `src/pages/`:
   - `Landing.tsx` - role (student/teacher/parent) and grade picker, with
     a **live theme preview** as you pick a grade. Creates/resumes the
-    demo school and student.
+    demo school and student. Links out to the
+    [model-comparison artifact](https://claude.ai/artifact/6tbgUwBYq8eHFmmiQkvdQD)
+    (opens in a new tab) for "why recency-weighted BKT" - see the main
+    README.
   - `StudentHome.tsx` - available sub-skills for the student's grade
     (with an honest empty state for every grade but 4, since that's all
     the demo curriculum covers) and each one's mastery meter.

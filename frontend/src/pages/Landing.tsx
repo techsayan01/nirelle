@@ -1,4 +1,4 @@
-import { ChalkboardTeacher, GraduationCap, House } from "@phosphor-icons/react"
+import { ArrowSquareOut, ChalkboardTeacher, ChartLineUp, GraduationCap, House } from "@phosphor-icons/react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { api } from "../api/client"
@@ -157,6 +157,17 @@ export default function Landing() {
         <Button size="lg" onClick={handleStart} disabled={!role || !name.trim()} loading={busy}>
           Let's go
         </Button>
+
+        <a
+          href="https://claude.ai/artifact/6tbgUwBYq8eHFmmiQkvdQD"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-8 flex items-center gap-1.5 text-sm font-medium text-ink-muted transition-colors hover:text-primary"
+        >
+          <ChartLineUp size={16} weight="bold" />
+          See why recency-weighted BKT beats the alternatives
+          <ArrowSquareOut size={14} />
+        </a>
       </div>
     </AppShell>
   )

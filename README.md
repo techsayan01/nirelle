@@ -9,6 +9,34 @@ the multi-tenant persistence layer, and an HTTP API wiring it all together.
 `frontend/` is a React + TypeScript UI (student, teacher, and parent views)
 over that API - see [`frontend/README.md`](./frontend/README.md).
 
+See it live: [why recency-weighted BKT beats the alternatives](https://claude.ai/artifact/6tbgUwBYq8eHFmmiQkvdQD) -
+a simulation (built on the real `nirelle.bkt` engine, not a reimplementation)
+comparing heuristic rules, classic BKT, and Nirelle's recency-weighted BKT
+across four scenarios. Also linked from the app's homepage.
+
+## Quickstart
+
+Two servers: the API (Python) and the UI (Node). Run both, in two terminals,
+from the repo root.
+
+```bash
+# 1. Backend - installs the package + FastAPI/uvicorn, then runs the API
+#    on http://localhost:8000. Auto-seeds the demo curriculum on startup.
+python3 -m venv .venv
+.venv/bin/pip install -e ".[api]"
+.venv/bin/python -m nirelle.api
+
+# 2. Frontend - in a second terminal, from the repo root
+cd frontend
+npm install
+npm run dev             # http://localhost:5173, proxies /api -> :8000
+```
+
+Open `http://localhost:5173` and pick a role. Only Grade 4 Math (fractions)
+has demo content - other grades correctly show an empty state rather than
+fake data. See [`frontend/README.md`](./frontend/README.md) for the design
+system and a tour of the pages.
+
 ## Layout
 
 - `src/nirelle/bkt/` — the mastery-tracking "brain":
@@ -118,13 +146,12 @@ state = service.record_attempt("student-123", "fractions.add_like_denom", Attemp
 session.commit()
 ```
 
-Run the API locally:
+To run the API itself (not just import the library), see [Quickstart](#quickstart)
+above. Once it's up:
 
 ```bash
-pip install -e ".[api]"
-python -c "import uvicorn; from nirelle.api import create_app; uvicorn.run(create_app())"
-# then e.g. curl -X POST localhost:8000/curriculum/sub-skills -H 'content-type: application/json' \
-#   -d '{"id": "fractions.add_like_denom", "name": "Adding fractions", "grade": 4, "subject": "math", "chapter": "fractions"}'
+curl -X POST localhost:8000/curriculum/sub-skills -H 'content-type: application/json' \
+  -d '{"id": "fractions.add_like_denom", "name": "Adding fractions", "grade": 4, "subject": "math", "chapter": "fractions"}'
 ```
 
 ```python
@@ -148,9 +175,23 @@ build_teacher_escalation("Asha", "Adding fractions", "adds denominators instead 
 
 ## Development
 
+Backend tests (137 tests covering the engine, persistence, and API):
+
 ```bash
 pip install -e ".[dev]"
 pytest
+```
+
+Frontend build/lint - see [`frontend/README.md`](./frontend/README.md#development):
+
+```bash
+cd frontend && npm run build && npm run lint
+```
+
+The simulation behind the model-comparison link above is also reproducible:
+
+```bash
+python3 scripts/model_comparison_simulation.py
 ```
 
 ## Open items carried over from the BRD
