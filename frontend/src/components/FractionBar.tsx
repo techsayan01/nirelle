@@ -21,8 +21,8 @@ function SegmentedBar({ filled, of }: { filled: number; of: number }) {
   return (
     <svg
       viewBox={`0 0 ${BAR_WIDTH} ${BAR_HEIGHT}`}
-      width={BAR_WIDTH}
-      height={BAR_HEIGHT}
+      className="block h-auto w-full"
+      preserveAspectRatio="xMidYMid meet"
       role="presentation"
     >
       <rect
@@ -83,7 +83,7 @@ export function FractionBar({ label, className = "" }: FractionBarProps) {
 
   return (
     <div
-      className={`flex flex-col gap-1 ${className}`}
+      className={`flex w-full max-w-[240px] flex-col gap-1 ${className}`}
       role="img"
       aria-label={`Fraction bar showing ${numerator} of ${denominator} parts filled`}
     >
