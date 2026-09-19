@@ -61,6 +61,7 @@ export default function StudentHome() {
   return (
     <AppShell
       maxWidth="wide"
+      band={band}
       eyebrow={`Grade ${session.grade}`}
       title={`Hi ${session.displayName.split(" ")[0]}!`}
       right={
@@ -97,7 +98,7 @@ export default function StudentHome() {
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">{subSkill.chapter}</p>
               <p className="mt-1 font-display text-lg font-bold text-ink">{subSkill.name}</p>
               <div className="mt-4 mb-5">
-                <MasteryMeter value={state.p_mastery} />
+                <MasteryMeter value={state.p_mastery} band={band} />
               </div>
               <Button
                 className="mt-auto"

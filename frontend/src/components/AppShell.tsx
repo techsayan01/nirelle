@@ -1,6 +1,8 @@
 import { GraduationCap } from "@phosphor-icons/react"
 import type { ReactNode } from "react"
 import { Link } from "react-router-dom"
+import type { Band } from "../theme/bands"
+import { BackgroundShapes } from "./BackgroundShapes"
 
 interface AppShellProps {
   eyebrow?: string
@@ -8,12 +10,15 @@ interface AppShellProps {
   right?: ReactNode
   children: ReactNode
   maxWidth?: "narrow" | "wide"
+  band?: Band
 }
 
-export function AppShell({ eyebrow, title, right, children, maxWidth = "narrow" }: AppShellProps) {
+export function AppShell({ eyebrow, title, right, children, maxWidth = "narrow", band }: AppShellProps) {
   return (
-    <div className="min-h-dvh bg-app-bg">
-      <header className="border-b border-line bg-surface/80 backdrop-blur">
+    <div className="relative min-h-dvh overflow-hidden bg-app-bg">
+      {band === "elementary" && <BackgroundShapes />}
+
+      <header className="relative border-b border-line bg-surface/80 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link to="/" className="flex items-center gap-2 font-display text-lg font-bold text-ink no-underline">
             <span className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] bg-primary text-on-primary">
@@ -25,7 +30,9 @@ export function AppShell({ eyebrow, title, right, children, maxWidth = "narrow" 
         </div>
       </header>
 
-      <main className={`mx-auto px-4 py-10 sm:px-6 ${maxWidth === "wide" ? "max-w-6xl" : "max-w-2xl"}`}>
+      <main
+        className={`relative mx-auto px-4 py-10 sm:px-6 ${maxWidth === "wide" ? "max-w-6xl" : "max-w-2xl"}`}
+      >
         {(eyebrow || title) && (
           <div className="mb-8">
             {eyebrow && (

@@ -67,7 +67,7 @@ export default function Landing() {
   }
 
   return (
-    <AppShell maxWidth="wide">
+    <AppShell maxWidth="wide" band={previewBand}>
       <div className="mx-auto max-w-3xl">
         <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-primary">Nirelle</p>
         <h1 className="mb-3 font-display text-4xl font-bold text-ink sm:text-5xl">

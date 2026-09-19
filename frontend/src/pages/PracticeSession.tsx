@@ -1,4 +1,4 @@
-import { ArrowRight, Lightbulb, UsersThree } from "@phosphor-icons/react"
+import { ArrowLeft, ArrowRight, Lightbulb, UsersThree } from "@phosphor-icons/react"
 import { useCallback, useEffect, useState } from "react"
 import { Navigate, useNavigate, useParams } from "react-router-dom"
 import { api } from "../api/client"
@@ -230,10 +230,18 @@ export default function PracticeSession() {
   if (!session.studentId) return <Navigate to="/" replace />
 
   return (
-    <AppShell eyebrow={subSkill?.chapter ?? "Practice"} title={subSkill?.name ?? "Loading..."}>
+    <AppShell eyebrow={subSkill?.chapter ?? "Practice"} title={subSkill?.name ?? "Loading..."} band={band}>
+      <button
+        onClick={() => navigate("/student")}
+        className="mb-6 flex cursor-pointer items-center gap-1.5 text-sm font-semibold text-ink-muted hover:text-ink"
+      >
+        <ArrowLeft size={16} weight="bold" />
+        My topics
+      </button>
+
       {state && phase !== "loading" && phase !== "error" && (
         <div className="mb-6">
-          <MasteryMeter value={state.p_mastery} />
+          <MasteryMeter value={state.p_mastery} band={band} />
         </div>
       )}
 
@@ -246,6 +254,7 @@ export default function PracticeSession() {
           questions={activeQuestions}
           onComplete={handleDiagnosticComplete}
           continueLabel="Submit"
+          band={band}
         />
       )}
 
@@ -278,6 +287,7 @@ export default function PracticeSession() {
           questions={activeQuestions}
           onComplete={handleRetestComplete}
           continueLabel="Submit"
+          band={band}
         />
       )}
 
@@ -296,6 +306,7 @@ export default function PracticeSession() {
             questions={activeQuestions}
             onComplete={handleTeacherRetestComplete}
             continueLabel="Submit"
+            band={band}
           />
         </>
       )}
