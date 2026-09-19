@@ -4,13 +4,24 @@
     {
       "name": "nirelle-api",
       "runtimeExecutable": ".venv/bin/python",
-      "runtimeArgs": ["-m", "nirelle.api"],
+      "runtimeArgs": [
+        "-m",
+        "nirelle.api"
+      ],
       "port": 8000
     },
     {
       "name": "nirelle-frontend",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "frontend", "--", "--port", "5173"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "frontend",
+        "--",
+        "--port",
+        "5173"
+      ],
       "port": 5173
     }
   ]
