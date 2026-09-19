@@ -180,10 +180,10 @@ _ADD_UNLIKE_DENOMINATORS = SubSkillSeed(
             id="aud.q2",
             sub_skill_id="fractions.add_unlike_denominators",
             difficulty=0.75,
-            correct_choice_id="7_12",
+            correct_choice_id="11_12",
             prompt="1/4 + 2/3 = ?",
             choices=(
-                Choice(id="7_12", label="7/12"),
+                Choice(id="11_12", label="11/12"),
                 Choice(id="3_7", label="3/7", misconception_tag="skips_common_denominator"),
                 Choice(id="5_12", label="5/12", misconception_tag="converts_only_one_fraction"),
             ),
