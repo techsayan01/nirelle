@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens for Nirelle's grade-band theming.
+ *
+ * Two layers, on purpose: Tailwind's @theme block maps semantic names
+ * (bg-primary, text-ink, rounded-md, ...) to the --nirelle-* custom
+ * properties below, and those in turn are re-defined per [data-band].
+ * Components always use the Tailwind utility, never the raw --nirelle-*
+ * variable, so switching bands re-themes everything without touching
+ * component code.
+ *
+ * Grade bands share one component system (same layout, same icon set,
+ * same motion language) and differ only in accent color, corner
+ * radius, and (elementary only) a display font for big headline
+ * moments - see Nirelle-BRD.md research notes for why: real K-12
+ * products (IXL, Khan Academy) differentiate grades by color and tone,
+ * not by re-skinning the whole UI per age group.
+ */
+
+@theme {
+  --color-primary: var(--nirelle-primary);
+  --color-primary-hover: var(--nirelle-primary-hover);
+  --color-on-primary: var(--nirelle-on-primary);
+  --color-secondary: var(--nirelle-secondary);
+  --color-accent: var(--nirelle-accent);
+  --color-surface: var(--nirelle-surface);
+  --color-app-bg: var(--nirelle-bg);
+  --color-ink: var(--nirelle-text);
+  --color-ink-muted: var(--nirelle-text-muted);
+  --color-line: var(--nirelle-border);
+
+  --color-success: #16a34a;
+  --color-success-bg: #f0fdf4;
+  --color-danger: #dc2626;
+  --color-danger-bg: #fef2f2;
+  --color-warning: #b45309;
+  --color-warning-bg: #fffbeb;
+  --color-info: #2563eb;
+  --color-info-bg: #eff6ff;
+
+  --radius-xs: var(--nirelle-radius-xs);
+  --radius-sm: var(--nirelle-radius-sm);
+  --radius-md: var(--nirelle-radius-md);
+  --radius-lg: var(--nirelle-radius-lg);
+  --radius-pill: 999px;
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--nirelle-font-display);
+
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.12);
+  --shadow-card-hover: 0 2px 4px rgba(15, 23, 42, 0.06), 0 16px 32px -16px rgba(15, 23, 42, 0.18);
+  --shadow-pop: 0 12px 32px -8px var(--nirelle-primary-shadow);
+}
+
+:root {
+  /* Fallback = high-school/adult band, so unthemed content stays legible. */
+  --nirelle-primary: #4338ca;
+  --nirelle-primary-hover: #3730a3;
+  --nirelle-primary-shadow: rgba(67, 56, 202, 0.28);
+  --nirelle-on-primary: #ffffff;
+  --nirelle-secondary: #6366f1;
+  --nirelle-accent: #b45309;
+  --nirelle-bg: #f8fafc;
+  --nirelle-surface: #ffffff;
+  --nirelle-text: #0f172a;
+  --nirelle-text-muted: #64748b;
+  --nirelle-border: #e2e8f0;
+  --nirelle-radius-xs: 6px;
+  --nirelle-radius-sm: 8px;
+  --nirelle-radius-md: 10px;
+  --nirelle-radius-lg: 16px;
+  --nirelle-font-display: var(--font-sans);
+}
+
+[data-band="elementary"] {
+  --nirelle-primary: #2563eb;
+  --nirelle-primary-hover: #1d4ed8;
+  --nirelle-primary-shadow: rgba(37, 99, 235, 0.3);
+  --nirelle-on-primary: #ffffff;
+  --nirelle-secondary: #f59e0b;
+  --nirelle-accent: #ec4899;
+  --nirelle-bg: #f5f9ff;
+  --nirelle-surface: #ffffff;
+  --nirelle-text: #0f172a;
+  --nirelle-text-muted: #5b6b85;
+  --nirelle-border: #dbeafe;
+  --nirelle-radius-xs: 10px;
+  --nirelle-radius-sm: 14px;
+  --nirelle-radius-md: 20px;
+  --nirelle-radius-lg: 28px;
+  --nirelle-font-display: "Fredoka", var(--font-sans);
+}
+
+[data-band="middle"] {
+  --nirelle-primary: #0d9488;
+  --nirelle-primary-hover: #0f766e;
+  --nirelle-primary-shadow: rgba(13, 148, 136, 0.28);
+  --nirelle-on-primary: #ffffff;
+  --nirelle-secondary: #0891b2;
+  --nirelle-accent: #d97706;
+  --nirelle-bg: #f2fbfa;
+  --nirelle-surface: #ffffff;
+  --nirelle-text: #0f172a;
+  --nirelle-text-muted: #5c6b6f;
+  --nirelle-border: #c9f1e8;
+  --nirelle-radius-xs: 8px;
+  --nirelle-radius-sm: 10px;
+  --nirelle-radius-md: 14px;
+  --nirelle-radius-lg: 20px;
+  --nirelle-font-display: var(--font-sans);
+}
+
+[data-band="high"] {
+  --nirelle-primary: #4338ca;
+  --nirelle-primary-hover: #3730a3;
+  --nirelle-primary-shadow: rgba(67, 56, 202, 0.28);
+  --nirelle-on-primary: #ffffff;
+  --nirelle-secondary: #6366f1;
+  --nirelle-accent: #b45309;
+  --nirelle-bg: #f8fafc;
+  --nirelle-surface: #ffffff;
+  --nirelle-text: #0f172a;
+  --nirelle-text-muted: #64748b;
+  --nirelle-border: #e2e8f0;
+  --nirelle-radius-xs: 6px;
+  --nirelle-radius-sm: 8px;
+  --nirelle-radius-md: 10px;
+  --nirelle-radius-lg: 16px;
+  --nirelle-font-display: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

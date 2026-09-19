@@ -1,0 +1,64 @@
+@import "./theme/tokens.css";
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-app-bg);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 200ms var(--ease-out, ease);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+button {
+  font-family: inherit;
+  touch-action: manipulation;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-12px) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120px) rotate(var(--confetti-rotate, 180deg));
+    opacity: 0;
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-pop-in {
+  animation: pop-in 420ms var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1)) both;
+}
