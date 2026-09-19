@@ -1,9 +1,11 @@
-import { ArrowRight } from "@phosphor-icons/react"
+import { ArrowRight, Sparkle, Star } from "@phosphor-icons/react"
 import { useEffect, useRef, useState } from "react"
 import type { DemoQuestion } from "../api/types"
+import type { Band } from "../theme/bands"
 import { Button } from "./Button"
 import { Card } from "./Card"
 import { FractionBar } from "./FractionBar"
+import { Mascot } from "./Mascot"
 
 export interface QuestionResponse {
   question_id: string
@@ -15,13 +17,20 @@ interface QuestionFlowProps {
   questions: DemoQuestion[]
   onComplete: (responses: QuestionResponse[]) => void
   continueLabel?: string
+  /** Elementary gets a star-based progress row, a bobbing mascot
+   * companion, and a bounce+sparkle on selecting an answer. Every other
+   * band keeps the plain bar - see the BRD-research note in
+   * frontend/README.md on why bands differ by tone/motion, not by
+   * swapping the whole component. */
+  band?: Band
 }
 
-export function QuestionFlow({ questions, onComplete, continueLabel = "Continue" }: QuestionFlowProps) {
+export function QuestionFlow({ questions, onComplete, continueLabel = "Continue", band }: QuestionFlowProps) {
   const [index, setIndex] = useState(0)
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [responses, setResponses] = useState<QuestionResponse[]>([])
   const startedAt = useRef<number>(performance.now())
+  const playful = band === "elementary"
 
   const question = questions[index]
 
@@ -47,16 +56,33 @@ export function QuestionFlow({ questions, onComplete, continueLabel = "Continue"
 
   return (
     <div>
-      <div className="mb-5 flex items-center gap-1.5" aria-hidden="true">
-        {questions.map((q, i) => (
-          <span
-            key={q.id}
-            className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${
-              i < index ? "bg-primary" : i === index ? "bg-primary/50" : "bg-black/[0.08]"
-            }`}
-          />
-        ))}
+      <div className="mb-5 flex items-center justify-between gap-3">
+        {playful ? (
+          <div className="flex flex-1 items-center gap-1.5" aria-hidden="true">
+            {questions.map((q, i) => (
+              <Star
+                key={q.id}
+                size={22}
+                weight={i <= index ? "fill" : "regular"}
+                className={i <= index ? "shrink-0 text-secondary" : "shrink-0 text-line"}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-1 items-center gap-1.5" aria-hidden="true">
+            {questions.map((q, i) => (
+              <span
+                key={q.id}
+                className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${
+                  i < index ? "bg-primary" : i === index ? "bg-primary/50" : "bg-black/[0.08]"
+                }`}
+              />
+            ))}
+          </div>
+        )}
+        {playful && <Mascot mood="thinking" size={40} className="animate-bob shrink-0" />}
       </div>
+
       <p className="mb-1 text-sm font-medium text-ink-muted">
         Question {index + 1} of {questions.length}
       </p>
@@ -73,13 +99,22 @@ export function QuestionFlow({ questions, onComplete, continueLabel = "Continue"
               aria-checked={active}
               onClick={() => setSelectedId(choice.id)}
               className={[
-                "flex cursor-pointer flex-col items-center gap-3 rounded-[var(--radius-md)] border-2 p-4",
+                "relative flex cursor-pointer flex-col items-center gap-3 rounded-[var(--radius-md)] border-2 p-4",
                 "transition-all duration-150 ease-out active:scale-[0.97]",
                 active
                   ? "border-primary bg-primary/[0.06] shadow-[var(--shadow-card)]"
                   : "border-line bg-surface hover:border-primary/50",
+                active && playful ? "animate-select-bounce" : "",
               ].join(" ")}
             >
+              {active && playful && (
+                <Sparkle
+                  weight="fill"
+                  size={20}
+                  className="animate-sparkle absolute -right-1.5 -top-1.5 text-accent"
+                  aria-hidden="true"
+                />
+              )}
               <FractionBar label={choice.label} className="pointer-events-none" />
               <span className="text-lg font-bold tabular-nums text-ink">{choice.label}</span>
             </button>
